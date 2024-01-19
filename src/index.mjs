@@ -52,7 +52,10 @@ app.get("/api/products", (req, res) => {
  */
 app.post("/api/users", (req, res) => {
   console.log(req.body);
-  return res.sendStatus(200);
+  const { body } = req;
+  const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...body };
+  mockUsers.push(newUser);
+  return res.status(201).send(newUser);
 });
 
 app.listen(PORT, () => {
