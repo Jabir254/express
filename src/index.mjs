@@ -1,4 +1,5 @@
 import express, { response } from "express";
+import { query } from "express-validator";
 
 const app = express();
 app.use(express.json());
@@ -18,8 +19,9 @@ const mockUsers = [
 app.get("/", (req, res) => {
   res.send("<h3>Welcome home</h3>");
 });
-app.get("/api/users", (req, res) => {
-  console.log(req.query);
+
+app.get("/api/users", query("filter").isString().notEmpty(), (req, res) => {
+  console.log(req['express-validator#contexts']);
   const {
     query: { filter, value },
   } = req;
