@@ -10,6 +10,6 @@ export const createUserValidation = {
     isString: true,
   },
   displayName: {
-    errormessage:"cannot be empty"
+    notEmpty:true
   }
 }

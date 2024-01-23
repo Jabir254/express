@@ -1,6 +1,6 @@
 import express from "express";
 import { query, validationResult, body, matchedData, checkSchema } from "express-validator";
-import {createUserValidation} from './utils/validationSchemas'
+import {createUserValidation} from './utils/validationSchemas.js'
 
 const app = express();
 app.use(express.json());
