@@ -7,40 +7,14 @@ import {
   checkSchema,
 } from "express-validator";
 import { createUserValidation } from "./utils/validationSchemas.js";
+import userRouters from "./routes/users.mjs";
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-
-import userRouters from "./routes/users.mjs";
-app.use(express.json);
+app.use(express.json());
 app.use(userRouters);
 
-const mockUsers = [
-  { id: 1, username: "jabir", displayName: "Jabir" },
-  { id: 2, username: "Kullow", displayName: "Kullow" },
-  { id: 3, username: "fade", displayName: "Fathe" },
-  { id: 4, username: "jason", displayName: "Jason" },
-  { id: 5, username: "henry", displayName: "Henry" },
-  { id: 6, username: "tina", displayName: "Tina" },
-  { id: 7, username: "marilyn", displayName: "Marilyn" },
-];
-
-app.get("/", (req, res) => {
-  res.send("<h3>Welcome home</h3>");
-});
-
-app.get("/api/users", query("filter").isString().notEmpty(), (req, res) => {
-  //console.log(req['express-validator#contexts']);
-  const result = validationResult(req);
-  //console.log(result);
-  const {
-    query: { filter, value },
-  } = req;
-  if (filter && value)
-    return res.send(mockUsers.filter((user) => user[filter].includes(value)));
-  return res.send(mockUsers);
-});
+const PORT = process.env.PORT || 3000;
 
 /**
  * GET

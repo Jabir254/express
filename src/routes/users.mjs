@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { query, validationResult } from "express-validator";
+import { mockUsers } from "../utils/constants.mjs";
 
 const router = Router();
-router.get("/", (res, req) => {
-  res.send(<h3>welcome home jajaga</h3>);
+router.get("/", (req, res) => {
+  res.send("welcome home jajaga");
 });
 
 router.get(
