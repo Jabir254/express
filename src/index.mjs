@@ -1,6 +1,12 @@
 import express from "express";
-import { query, validationResult, body, matchedData, checkSchema } from "express-validator";
-import {createUserValidation} from './utils/validationSchemas.js'
+import {
+  query,
+  validationResult,
+  body,
+  matchedData,
+  checkSchema,
+} from "express-validator";
+import { createUserValidation } from "./utils/validationSchemas.js";
 
 const app = express();
 app.use(express.json());
@@ -55,21 +61,18 @@ app.get("/api/products", (req, res) => {
 /**
  * post request
  */
-app.post(
-  "/api/users",checkSchema(createUserValidation), (req, res) => {
-    const result = validationResult(req);
-    console.log(result);
+app.post("/api/users", checkSchema(createUserValidation), (req, res) => {
+  const result = validationResult(req);
+  console.log(result);
 
-    if (!result.isEmpty())
-      return res.status(400).send({ error: result.array() });
+  if (!result.isEmpty()) return res.status(400).send({ error: result.array() });
 
-    const data = matchedData(req);
+  const data = matchedData(req);
 
-    const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...data };
-    mockUsers.push(newUser);
-    return res.status(201).send(newUser);
-  },
-);
+  const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...data };
+  mockUsers.push(newUser);
+  return res.status(201).send(newUser);
+});
 /**
  * PUT request
  *

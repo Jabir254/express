@@ -1,15 +1,15 @@
 export const createUserValidation = {
   username: {
-    isLength:{
-      options:{
+    isLength: {
+      options: {
         min: 5,
         max: 32,
-      }
+      },
     },
     notEmpty: true,
     isString: true,
   },
   displayName: {
-    notEmpty:true
-  }
-}
+    notEmpty: true,
+  },
+};
