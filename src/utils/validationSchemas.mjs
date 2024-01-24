@@ -1,4 +1,4 @@
-export const createUserValidation = {
+const createUserValidation = {
   username: {
     isLength: {
       options: {
@@ -13,3 +13,5 @@ export const createUserValidation = {
     notEmpty: true,
   },
 };
+
+export default createUserValidation;
