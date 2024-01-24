@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 import userRouters from "./routes/users.mjs";
 app.use(express.json);
 app.use(userRouters);
+
 const mockUsers = [
   { id: 1, username: "jabir", displayName: "Jabir" },
   { id: 2, username: "Kullow", displayName: "Kullow" },
