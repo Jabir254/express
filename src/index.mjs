@@ -25,6 +25,7 @@ const PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   console.log(req.session);
   console.log(req.session.id);
+  req.session.visited = true;
   res.cookie("hello", "world");
   res.status(201).send({ msg: "Hello world" });
 });
