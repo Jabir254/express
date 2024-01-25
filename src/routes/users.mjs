@@ -4,9 +4,6 @@ import mockUsers from "../utils/constants.mjs";
 import createUserValidation from '../utils/validationSchemas.mjs'
 
 const router = Router();
-router.get("/", (req, res) => {
-  res.send("welcome home jajaga");
-});
 
 router.get(
   "/api/users",
