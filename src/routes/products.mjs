@@ -4,7 +4,10 @@ const router = Router();
 
 router.get("/api/products", (req, res) => {
   console.log(req.headers.cookie);
-  res.send([{ id: 123, name: "Tomato", price: 345 }]);
+  console.log(req.cookies);
+  if (req.cookies.hello && req.cookies.hello === "world")
+    return res.send([{ id: 123, name: "Tomato", price: 345 }]);
+  return res.send({ msg: "sorry need the correct cookies" });
 });
 
 export default router;
