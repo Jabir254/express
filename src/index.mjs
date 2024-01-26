@@ -65,7 +65,7 @@ app.post("/api/cart", (req, res) => {
 
 app.get("/api/cart", (req, res) => {
   if (!req.session.user) return res.sendStatus(401);
-  return res.send(req.session.cart ?? [] );
+  return res.send(req.session.cart ?? []);
 });
 
 app.listen(PORT, () => {
