@@ -2,6 +2,7 @@ import express from "express";
 import routers from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import mockUsers from "./utils/constants.mjs";
 
 const app = express();
 
@@ -28,6 +29,27 @@ app.get("/", (req, res) => {
   req.session.visited = true;
   res.cookie("hello", "world");
   res.status(201).send({ msg: "Hello world" });
+});
+
+app.post("/api/auth", (req, res) => {
+  const {
+    body: { username, password },
+  } = req;
+  const findUser = mockUsers.find((user) => user.username === username);
+  if (!findUser) return res.status(401).send({ msg: "bad credentials" });
+
+  if (findUser.password !== password)
+    return res.status(401).send({ msg: "bad credentials" });
+
+  req.session.user = findUser;
+
+  return res.status(200).send(findUser);
+});
+
+app.get("/api/auth/status", (req, res) => {
+  return req.session.user
+    ? res.status(200).send(req.session.user)
+    : res.status(401).send({ msg: "not authenticated" });
 });
 
 app.listen(PORT, () => {
