@@ -52,7 +52,7 @@ app.get("/api/auth/status", (req, res) => {
     : res.status(401).send({ msg: "not authenticated" });
 });
 app.post("/api/cart", (req, res) => {
-  if (!req.session.user) return response.sendStatus(401);
+  if (!req.session.user) return res.sendStatus(401);
   const { bosy: item } = req;
   const { cart } = req.session;
   if (cart) {
@@ -61,6 +61,11 @@ app.post("/api/cart", (req, res) => {
     req.session.cart = [item];
   }
   return res.status(201).send(item);
+});
+
+app.get("/api/cart", (req, res) => {
+  if (!req.session.user) return res.sendStatus(401);
+  return res.send(req.session.cart ?? [] );
 });
 
 app.listen(PORT, () => {
