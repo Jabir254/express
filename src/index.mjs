@@ -2,7 +2,7 @@ import express, { response } from "express";
 import routers from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import mockUsers from "./utils/constants.mjs";
+import passport from "passport";
 
 const app = express();
 
@@ -19,17 +19,12 @@ app.use(
   }),
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(routers);
 
 const PORT = process.env.PORT || 3000;
-
-app.get("/", (req, res) => {
-  console.log(req.session);
-  console.log(req.session.id);
-  req.session.visited = true;
-  res.cookie("hello", "world");
-  res.status(201).send({ msg: "Hello world" });
-});
 
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);
