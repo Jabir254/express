@@ -26,7 +26,9 @@ app.use(passport.session());
 app.use(routers);
 
 //authenticate
-app.post("/api/auth/1", passport.authenticate("local"), (req, res) => {});
+app.post("/api/auth/1", passport.authenticate("local"), (req, res) => {
+  res.sendStatus(200);
+});
 
 const PORT = process.env.PORT || 3000;
 
