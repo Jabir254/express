@@ -1,5 +1,5 @@
 import passport from "passport";
-import { Strategy, strategies } from "passport-local";
+import { Strategy } from "passport-local";
 import mockUsers from "../utils/constants.mjs";
 
 export default passport.use(

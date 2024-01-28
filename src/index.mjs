@@ -3,7 +3,8 @@ import routers from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
-import 
+import "./strategies/local-strateies.mjs";
+
 const app = express();
 
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routers);
+
+//authenticate
+app.post("/api/auth/1", passport.authenticate("local"), (req, res) => {});
 
 const PORT = process.env.PORT || 3000;
 

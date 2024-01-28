@@ -1,4 +1,5 @@
 import { Router } from "express";
+import mockUsers from "../utils/constants.mjs";
 const router = Router();
 
 router.post("/api/auth", (req, res) => {
