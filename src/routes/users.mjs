@@ -2,7 +2,7 @@ import { Router } from "express";
 import { query, validationResult, checkSchema } from "express-validator";
 import mockUsers from "../utils/constants.mjs";
 import createUserValidation from "../utils/validationSchemas.mjs";
-
+import User from "../schemas/user.js";
 const router = Router();
 
 router.get(
@@ -34,18 +34,22 @@ router.get("/api/users/:id", (req, res) => {
   return res.send(findUser);
 });
 
-router.post("/api/users", checkSchema(createUserValidation), (req, res) => {
-  const result = validationResult(req);
-  console.log(result);
-
-  if (!result.isEmpty()) return res.status(400).send({ error: result.array() });
-
-  const data = matchedData(req);
-
-  const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...data };
-  mockUsers.push(newUser);
-  return res.status(201).send(newUser);
-});
+//post request
+router.post(
+  "/api/users",
+  checkSchema(createUserValidation),
+  async (req, res) => {
+    const { body } = req;
+    const newUser = new User(body);
+    try {
+      const savedUser = await newUser.save();
+      return res.status(201).send(savedUser);
+    } catch (error) {
+      console.log(error);
+      return res.sendStatus(400);
+    }
+  },
+);
 /**
  * PUT request
  *
