@@ -1,8 +1,8 @@
-import express, { response } from "express";
+import express from "express";
 import routers from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import passport, { Passport } from "passport";
+import passport from "passport";
 import mongoose from "mongoose";
 import "./strategies/local-strateies.mjs";
 
