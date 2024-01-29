@@ -2,7 +2,7 @@ import { Router } from "express";
 import { query, validationResult, checkSchema } from "express-validator";
 import mockUsers from "../utils/constants.mjs";
 import createUserValidation from "../utils/validationSchemas.mjs";
-import User from "../schemas/user.js";
+import User from "../schemas/user.mjs";
 const router = Router();
 
 router.get(
@@ -39,6 +39,8 @@ router.post(
   "/api/users",
   checkSchema(createUserValidation),
   async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
     const { body } = req;
     const newUser = new User(body);
     try {
