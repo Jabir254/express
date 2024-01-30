@@ -23,4 +23,12 @@ router.get("/api/auth/status", (req, res) => {
     : res.status(401).send({ msg: "not authenticated" });
 });
 
+router.post("/api/auth/logout", (req, res) => {
+  if (!req.user) return res.sendStatus(401);
+  req.logout((err) => {
+    if (err) return res.sendStatus(400);
+    res.send(200);
+  });
+});
+
 export default router;

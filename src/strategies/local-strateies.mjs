@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import mockUsers from "../utils/constants.mjs";
+import User from "../schemas/user.mjs";
 
 passport.serializeUser((user, done) => {
   console.log(`inside serializeUser`);
@@ -8,11 +9,11 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(async (id, done) => {
   console.log(`inside deserializeUser`);
   console.log(`deserialing user ID ${id}`);
   try {
-    const findUser = mockUsers.find((user) => user.id === id);
+    const findUser = await User.findById(id);
     if (!findUser) throw new Error("user not found");
     done(null, findUser);
   } catch (err) {
@@ -21,12 +22,11 @@ passport.deserializeUser((id, done) => {
 });
 
 export default passport.use(
-  new Strategy((username, password, done) => {
+  new Strategy(async (username, password, done) => {
     try {
-      const findUser = mockUsers.find((user) => user.username == username);
+      const findUser = await User.findOne({ username });
       if (!findUser) throw new Error("user not found");
-      if (findUser.password !== password)
-        throw new Error("password not match invalid crediatials");
+      if (findUser.password !== password) throw new Error("bad crediatials");
       done(null, findUser);
     } catch (err) {
       done(err, null);
