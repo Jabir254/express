@@ -2,6 +2,8 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import mockUsers from "../utils/constants.mjs";
 import User from "../schemas/user.mjs";
+import { compare } from "bcrypt";
+import { comparePassword } from "../utils/helpers.mjs";
 
 passport.serializeUser((user, done) => {
   console.log(`inside serializeUser`);
@@ -26,10 +28,11 @@ export default passport.use(
     try {
       const findUser = await User.findOne({ username });
       if (!findUser) throw new Error("user not found");
-      if (findUser.password !== password) throw new Error("bad crediatials");
+      if (!comparePassword(password, findUser.password))
+        throw new Error("bad crediatials");
       done(null, findUser);
     } catch (err) {
       done(err, null);
     }
-  }),
+  })
 );
