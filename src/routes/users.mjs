@@ -8,6 +8,7 @@ import {
 import mockUsers from "../utils/constants.mjs";
 import createUserValidation from "../utils/validationSchemas.mjs";
 import User from "../schemas/user.mjs";
+import { hashPassword } from "../utils/helpers.mjs";
 const router = Router();
 
 router.get(
@@ -46,8 +47,13 @@ router.post(
   async (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).send(result.array());
+    
     const data = matchedData(req);
+    
     console.log(data);
+    data.password = hashPassword(data.password)
+    console.log(data);
+
     const newUser = new User(data);
     try {
       const savedUser = await newUser.save();
