@@ -11,7 +11,7 @@ const app = express();
 
 mongoose
   .connect("mongodb://localhost/express_tut")
-  .then(() => console.log("connected to database"))
+  .then((ii) => console.log("connected to database"))
   .catch((err) => console.log(`Error ${err}`));
 
 app.use(express.json());
